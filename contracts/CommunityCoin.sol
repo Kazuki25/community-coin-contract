@@ -22,16 +22,16 @@ contract CommunityCoin is StandardToken {
     string public name = "CommunityCoin v0.1";
     string public symbol = "CoC";
     uint public decimals = 18;
-    int public totalSupply_;
+    uint public totalSupply_;
 
     // 共通コイン保有リスト.
-    mapping (address => int256) public balances;
+    mapping (address => uint256) public balances;
     // 個人コイン台帳:ownerをkeyに、その人が保有している個人コインの保有量を参照する.
     mapping (address => mapping (address => uint256)) public personCoin;
     // 個人コイン保有リスト:ownerをkeyに、その人が保有している個人コインのアドレスリストを参照する.
     mapping (address => address[]) public ownCoins;
 
-    constructor (string _name, string _symbol, uint _decimals, int initialSupply) public {
+    constructor (string _name, string _symbol, uint _decimals, uint initialSupply) public {
         name = _name;
         symbol = _symbol;
         decimals = _decimals;
