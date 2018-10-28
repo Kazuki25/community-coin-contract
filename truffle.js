@@ -14,6 +14,7 @@
 var HDWalletProvider = require("truffle-hdwallet-provider");
 //load single private key as string
 var privateKey = "0xDcFC3Bf61b80f0AA2Fbb8FF4Fc21919Bbcc7Bb07";
+var mnemonic = "wild excuse birth glide grocery wall high cook tissue ladder symptom film front chair ready";
 
 module.exports = {
   networks: {
@@ -29,17 +30,17 @@ module.exports = {
     },
     kovan: {
       // must be a thunk, otherwise truffle commands may hang in CI
-      provider: () =>
-        new HDWalletProvider(privateKey, "https://kovan.infura.io/v3/7fff365433294ad089e4ce49ed9b24a5"),
-      network_id: '3',
-      gas:  5000000000
+      provider: new HDWalletProvider(mnemonic, "https://kovan.infura.io/v3/7fff365433294ad089e4ce49ed9b24a5"),
+      network_id: '42',
+      gas:  8000000
+      // from: "0xDcFC3Bf61b80f0AA2Fbb8FF4Fc21919Bbcc7Bb07"
     },
     ropsten: {
       // must be a thunk, otherwise truffle commands may hang in CI
       provider: () =>
-        new HDWalletProvider(privateKey, "https://ropsten.infura.io/v3/7fff365433294ad089e4ce49ed9b24a5"),
+        new HDWalletProvider(mnemonic, "https://ropsten.infura.io/v3/7fff365433294ad089e4ce49ed9b24a5"),
       network_id: '2',
-      gas:  5000000000
+      gas:  8000000
     }
   }
 };

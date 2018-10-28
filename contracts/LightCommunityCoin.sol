@@ -2,8 +2,6 @@ pragma solidity ^0.4.24;
 
 import "../node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol";
 
-interface tokenRecipient { function receiveApproval(address _from, int256 _value, address _token, bytes _extraData) external; }
-
 contract LightCommunityCoin {
 
     /*
@@ -19,13 +17,14 @@ contract LightCommunityCoin {
     // Public variables of the token
     string public name;
     string public symbol;
-    int8 public decimals = 18;
+    int8 public decimals = 9;
     // 18 decimals is the strongly suggested default, avoid changing it
     int256 public totalSupply;
     address public central;
 
     // This creates an array with all balances
     mapping (address => int256) public balanceOf;
+    
 
     // This generates a public event on the blockchain that will notify clients
     event Transfer(address indexed from, address indexed to, int256 value);
@@ -49,7 +48,7 @@ contract LightCommunityCoin {
         string tokenName,
         string tokenSymbol
     ) public {
-        totalSupply = initialSupply * int256(10 ** uint256(decimals));  // Update total supply with the decimal amount
+        totalSupply = initialSupply;  // Update total supply with the decimal amount
         balanceOf[msg.sender] = totalSupply;                // Give the creator all initial tokens
         name = tokenName;                                   // Set the name for display purposes
         symbol = tokenSymbol;                               // Set the symbol for display purposes
@@ -64,14 +63,10 @@ contract LightCommunityCoin {
         require(_to != 0x0);
         // Check for overflows
         require(balanceOf[_to] + _value >= balanceOf[_to]);
-        // Save this for an assertion in the future
-        int previousBalances = balanceOf[_from] + balanceOf[_to];
         // Subtract from the sender
         balanceOf[msg.sender] -= _value;
         balanceOf[_to] += _value;
         emit Transfer(_from, _to, _value);
-        // Asserts are used to use static analysis to find bugs in your code. They should never fail
-        assert(balanceOf[_from] + balanceOf[_to] == previousBalances);
     }
 
     /**
